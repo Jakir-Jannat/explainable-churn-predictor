@@ -1,0 +1,310 @@
+{
+  "churn_threshold": 0.35000000000000003,
+  "risk_bins": {
+    "Low": [
+      0.0,
+      0.25
+    ],
+    "Medium": [
+      0.25,
+      0.5
+    ],
+    "High": [
+      0.5,
+      0.75
+    ],
+    "Critical": [
+      0.75,
+      1.01
+    ]
+  },
+  "numeric_features": [
+    "tenure",
+    "MonthlyCharges",
+    "TotalCharges",
+    "num_services",
+    "avg_monthly_spend",
+    "SeniorCitizen",
+    "has_internet_addons"
+  ],
+  "categorical_features": [
+    "gender",
+    "Partner",
+    "Dependents",
+    "PhoneService",
+    "MultipleLines",
+    "InternetService",
+    "OnlineSecurity",
+    "OnlineBackup",
+    "DeviceProtection",
+    "TechSupport",
+    "StreamingTV",
+    "StreamingMovies",
+    "Contract",
+    "PaperlessBilling",
+    "PaymentMethod",
+    "tenure_group"
+  ],
+  "engineered_feature_doc": {
+    "tenure_group": "Coarse tenure bucket (0-12, 13-24, 25-48, 49-72 months) capturing the early-tenure churn spike.",
+    "num_services": "Count of the 6 optional add-on services the customer subscribes to (0-6).",
+    "avg_monthly_spend": "TotalCharges / tenure \u2014 a smoothed spend rate distinct from the current MonthlyCharges.",
+    "has_internet_addons": "1 if the customer has at least one add-on service, else 0."
+  },
+  "model_comparison": [
+    {
+      "Model": "LightGBM",
+      "ROC-AUC": 0.9365094495631714,
+      "PR-AUC": 0.9447598375103937,
+      "Precision": 0.8650321941555226,
+      "Recall": 0.8439236530562938,
+      "F1": 0.8543475602299132,
+      "Accuracy": 0.8561246677941532
+    },
+    {
+      "Model": "Random Forest",
+      "ROC-AUC": 0.9338038204993064,
+      "PR-AUC": 0.925898201118098,
+      "Precision": 0.8612371626462861,
+      "Recall": 0.8712249335588307,
+      "F1": 0.8662022579870285,
+      "Accuracy": 0.8654264315051945
+    },
+    {
+      "Model": "XGBoost",
+      "ROC-AUC": 0.9314096093348552,
+      "PR-AUC": 0.9403942727362082,
+      "Precision": 0.8557055214723926,
+      "Recall": 0.8424740275428848,
+      "F1": 0.8490382274166058,
+      "Accuracy": 0.8502053636143996
+    },
+    {
+      "Model": "Logistic Regression",
+      "ROC-AUC": 0.8522304263635011,
+      "PR-AUC": 0.8377648277901422,
+      "Precision": 0.7518050541516246,
+      "Recall": 0.8050253684464846,
+      "F1": 0.7775055419437639,
+      "Accuracy": 0.7696303454940807
+    }
+  ],
+  "best_model_name": "XGBoost (Optuna-tuned, isotonic-calibrated)",
+  "optuna_best_params": {
+    "n_estimators": 401,
+    "max_depth": 8,
+    "learning_rate": 0.055621343741834965,
+    "subsample": 0.7362179273581455,
+    "colsample_bytree": 0.7937247437014668,
+    "min_child_weight": 2,
+    "gamma": 2.087980086737987,
+    "reg_alpha": 0.41089395691527036,
+    "reg_lambda": 7.754750542130471e-05
+  },
+  "optuna_best_cv_roc_auc": 0.9408959764398788,
+  "final_test_metrics": {
+    "Accuracy": 0.7686302342086586,
+    "Precision": 0.5504201680672269,
+    "Recall": 0.7005347593582888,
+    "F1": 0.6164705882352941,
+    "ROC-AUC": 0.8392324782350359,
+    "PR-AUC": 0.6424453290105865,
+    "Brier": 0.1417310720270052
+  },
+  "brier_score_train": 0.0986195522065303,
+  "global_shap_importance": [
+    {
+      "feature": "cat__Contract_Month-to-month",
+      "mean_abs_shap": 0.724058210849762
+    },
+    {
+      "feature": "num__tenure",
+      "mean_abs_shap": 0.38380107283592224
+    },
+    {
+      "feature": "cat__OnlineSecurity_No",
+      "mean_abs_shap": 0.2461012899875641
+    },
+    {
+      "feature": "cat__TechSupport_No",
+      "mean_abs_shap": 0.21870586276054382
+    },
+    {
+      "feature": "cat__PaymentMethod_Electronic check",
+      "mean_abs_shap": 0.2150682657957077
+    },
+    {
+      "feature": "cat__Contract_Two year",
+      "mean_abs_shap": 0.2001906931400299
+    },
+    {
+      "feature": "cat__InternetService_Fiber optic",
+      "mean_abs_shap": 0.17544513940811157
+    },
+    {
+      "feature": "num__avg_monthly_spend",
+      "mean_abs_shap": 0.15925802290439606
+    },
+    {
+      "feature": "num__MonthlyCharges",
+      "mean_abs_shap": 0.15404894948005676
+    },
+    {
+      "feature": "cat__PaperlessBilling_Yes",
+      "mean_abs_shap": 0.15081487596035004
+    },
+    {
+      "feature": "num__TotalCharges",
+      "mean_abs_shap": 0.1385321319103241
+    },
+    {
+      "feature": "cat__MultipleLines_No",
+      "mean_abs_shap": 0.09397599846124649
+    },
+    {
+      "feature": "cat__gender_Male",
+      "mean_abs_shap": 0.08597545325756073
+    },
+    {
+      "feature": "cat__tenure_group_0-12",
+      "mean_abs_shap": 0.08061462640762329
+    },
+    {
+      "feature": "cat__StreamingMovies_Yes",
+      "mean_abs_shap": 0.07934876531362534
+    },
+    {
+      "feature": "cat__Dependents_Yes",
+      "mean_abs_shap": 0.07429065555334091
+    },
+    {
+      "feature": "cat__Partner_Yes",
+      "mean_abs_shap": 0.07055393606424332
+    },
+    {
+      "feature": "cat__OnlineBackup_No",
+      "mean_abs_shap": 0.06645084917545319
+    },
+    {
+      "feature": "cat__StreamingTV_Yes",
+      "mean_abs_shap": 0.05827059596776962
+    },
+    {
+      "feature": "cat__Contract_One year",
+      "mean_abs_shap": 0.04507792368531227
+    },
+    {
+      "feature": "num__num_services",
+      "mean_abs_shap": 0.044725462794303894
+    },
+    {
+      "feature": "cat__InternetService_DSL",
+      "mean_abs_shap": 0.04396601766347885
+    },
+    {
+      "feature": "cat__MultipleLines_Yes",
+      "mean_abs_shap": 0.03440571203827858
+    },
+    {
+      "feature": "cat__PaymentMethod_Credit card (automatic)",
+      "mean_abs_shap": 0.03422299399971962
+    },
+    {
+      "feature": "cat__DeviceProtection_No",
+      "mean_abs_shap": 0.0320061556994915
+    },
+    {
+      "feature": "cat__OnlineSecurity_Yes",
+      "mean_abs_shap": 0.028842657804489136
+    },
+    {
+      "feature": "cat__tenure_group_49-72",
+      "mean_abs_shap": 0.0263839028775692
+    },
+    {
+      "feature": "cat__PaymentMethod_Mailed check",
+      "mean_abs_shap": 0.024843307211995125
+    },
+    {
+      "feature": "cat__PaymentMethod_Bank transfer (automatic)",
+      "mean_abs_shap": 0.02363155409693718
+    },
+    {
+      "feature": "cat__StreamingTV_No",
+      "mean_abs_shap": 0.022126713767647743
+    },
+    {
+      "feature": "cat__StreamingMovies_No",
+      "mean_abs_shap": 0.02105453982949257
+    },
+    {
+      "feature": "cat__PhoneService_Yes",
+      "mean_abs_shap": 0.020666535943746567
+    },
+    {
+      "feature": "num__SeniorCitizen",
+      "mean_abs_shap": 0.01656213402748108
+    },
+    {
+      "feature": "cat__TechSupport_Yes",
+      "mean_abs_shap": 0.0161405261605978
+    },
+    {
+      "feature": "cat__DeviceProtection_Yes",
+      "mean_abs_shap": 0.012761687859892845
+    },
+    {
+      "feature": "cat__tenure_group_13-24",
+      "mean_abs_shap": 0.012547879479825497
+    },
+    {
+      "feature": "cat__OnlineBackup_Yes",
+      "mean_abs_shap": 0.012038763612508774
+    },
+    {
+      "feature": "cat__tenure_group_25-48",
+      "mean_abs_shap": 0.011842641048133373
+    },
+    {
+      "feature": "cat__MultipleLines_No phone service",
+      "mean_abs_shap": 0.00747307576239109
+    },
+    {
+      "feature": "num__has_internet_addons",
+      "mean_abs_shap": 0.00189540337305516
+    },
+    {
+      "feature": "cat__TechSupport_No internet service",
+      "mean_abs_shap": 0.0
+    },
+    {
+      "feature": "cat__StreamingTV_No internet service",
+      "mean_abs_shap": 0.0
+    },
+    {
+      "feature": "cat__OnlineBackup_No internet service",
+      "mean_abs_shap": 0.0
+    },
+    {
+      "feature": "cat__OnlineSecurity_No internet service",
+      "mean_abs_shap": 0.0
+    },
+    {
+      "feature": "cat__InternetService_No",
+      "mean_abs_shap": 0.0
+    },
+    {
+      "feature": "cat__DeviceProtection_No internet service",
+      "mean_abs_shap": 0.0
+    },
+    {
+      "feature": "cat__StreamingMovies_No internet service",
+      "mean_abs_shap": 0.0
+    }
+  ],
+  "n_train": 5634,
+  "n_test": 1409,
+  "train_churn_rate": 0.2653532126375577,
+  "test_churn_rate": 0.2654364797728886,
+  "random_state": 42
+}
